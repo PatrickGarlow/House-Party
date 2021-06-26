@@ -10,13 +10,16 @@ export default class Room extends Component {
       guestCanPause: false,
       isHost: false,
       showSettings:false,
+      spotifyAuthenicated:false,
     };
     this.roomCode = this.props.match.params.roomCode;
-    this.getRoomDetails();
     this.leaveButtonPressed = this.leaveButtonPressed.bind(this);
     this.updateShowSettings = this.updateShowSettings.bind(this);
     this.renderSettingsButton = this.renderSettingsButton.bind(this);
     this.renderSettings = this.renderSettings.bind(this);
+    this.getRoomDetails = this.getRoomDetails.bind(this);
+    this.authenicateSpotify = this.authenicateSpotify.bind(this);
+    this.getRoomDetails();
   }
   updateShowSettings(value) {
     this.setState({
@@ -49,7 +52,7 @@ export default class Room extends Component {
           guestCanPause={this.state.guestCanPause} 
           guestCanQueue={this.state.guestCanQueue} 
           roomCode = {this.roomCode}
-          updateCallback = {()=>{}}
+          updateCallback = {this.getRoomDetails}
         ></CreateRoomPage>
       </Grid>
       <Grid item xs={12} align="center">
@@ -80,7 +83,27 @@ export default class Room extends Component {
           guestCanPause: data.guest_can_pause,
           isHost: data.is_host,
         });
+        if(this.state.isHost) {
+        
+          this.authenicateSpotify();
+        }
+        
       });
+  }
+
+  authenicateSpotify(){
+    fetch('/spotify/is-authenticated')
+    .then((response) => response.json())
+    .then((data) => {
+      this.setState({spotifyAuthenicated:data.status});
+      if(!data.status) {
+        fetch('/spotify/get-auth-url')
+        .then((response) => response.json())
+        .then((data) =>{
+          window.location.replace(data.url);
+        })
+      }
+    });
   }
 
   leaveButtonPressed() {
