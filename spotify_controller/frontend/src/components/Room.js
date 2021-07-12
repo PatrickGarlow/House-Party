@@ -11,8 +11,11 @@ export default class Room extends Component {
       guestCanPause: false,
       isHost: false,
       showSettings: false,
+      showQRCode: false,
       spotifyAuthenticated: false,
       song: {},
+      qrCodeLink: '',
+
     };
     this.roomCode = this.props.match.params.roomCode;
     this.leaveButtonPressed = this.leaveButtonPressed.bind(this);
@@ -47,6 +50,7 @@ export default class Room extends Component {
           votesToSkip: data.votes_to_skip,
           guestCanPause: data.guest_can_pause,
           isHost: data.is_host,
+          qrCodeLink: data.qr_code_link,
         });
         if (this.state.isHost) {
           this.authenticateSpotify();
@@ -81,7 +85,6 @@ export default class Room extends Component {
       })
       .then((data) => {
         this.setState({ song: data });
-        console.log(data);
       });
   }
 
@@ -95,6 +98,8 @@ export default class Room extends Component {
       this.props.history.push("/");
     });
   }
+
+  hideQRButtonPressed
 
   updateShowSettings(value) {
     this.setState({
@@ -141,6 +146,29 @@ export default class Room extends Component {
     );
   }
 
+  updateShowQRCode(value) {
+    this.setState({
+      showQRCode: value,
+    });
+  }
+
+  renderQRCode() {
+    return (
+      <div class="qr-code-item">
+        <img src={this.state.qrCodeLink} class="qr-code"></img>
+        <button onClick={() => this.updateShowQRCode(false)}>Hide QR Code</button>
+      </div>
+    );
+  }
+
+  renderQROpenButton() {
+    return (
+      <button onClick={() => this.updateShowQRCode(true)}>
+        Show QR Code
+      </button>
+    );
+  }
+
   render() {
     if (this.state.showSettings) {
       return this.renderSettings();
@@ -154,6 +182,7 @@ export default class Room extends Component {
         </Grid>
         <MusicPlayer {...this.state.song} />
         {this.state.isHost ? this.renderSettingsButton() : null}
+        {this.state.showQRCode ? this.renderQRCode() : this.renderQROpenButton()}
         <Grid item xs={12} align="center">
           <Button
             variant="contained"
@@ -163,6 +192,7 @@ export default class Room extends Component {
             Leave Room
           </Button>
         </Grid>
+        
       </Grid>
     );
   }

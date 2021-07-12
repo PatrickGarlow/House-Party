@@ -16,9 +16,9 @@ export default class CreateRoomPage extends Component {
   static defaultProps = {
     votesToSkip: 2,
     guestCanPause: true,
-    guestCanQueue: true,
     update: false,
     roomCode: null,
+    qrCodeLink: null,
     updateCallback: () => {},
   };
 
@@ -27,7 +27,6 @@ export default class CreateRoomPage extends Component {
     this.state = {
       guestCanPause: this.props.guestCanPause,
       votesToSkip: this.props.votesToSkip,
-      guestCanQueue: this.props.guestCanQueue,
       errorMsg: "",
       successMsg: "",
     };
@@ -50,11 +49,6 @@ export default class CreateRoomPage extends Component {
     });
   }
 
-  handleGuestCanQueueChange(e) {
-    this.setState({
-      guestCanQueue: e.target.value === "true" ? true : false,
-    });
-  }
 
   handleRoomButtonPressed() {
     const requestOptions = {
@@ -184,31 +178,6 @@ export default class CreateRoomPage extends Component {
                 value="false"
                 control={<Radio color="secondary" />}
                 label="No Control"
-                labelPlacement="bottom"
-              />
-            </RadioGroup>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} align="center">
-          <FormControl component="fieldset">
-            <FormHelperText>
-              <div align="center">Guest Control of Queue</div>
-            </FormHelperText>
-            <RadioGroup
-              row
-              defaultValue={this.props.guestCanQueue.toString()}
-              onChange={this.handleGuestCanQueueChange}
-            >
-              <FormControlLabel
-                value="true"
-                control={<Radio color="primary" />}
-                label="Yes"
-                labelPlacement="bottom"
-              />
-              <FormControlLabel
-                value="false"
-                control={<Radio color="secondary" />}
-                label="No"
                 labelPlacement="bottom"
               />
             </RadioGroup>
