@@ -3,7 +3,6 @@ import RoomJoinPage from "./RoomJoinPage";
 import CreateRoomPage from "./CreateRoomPage";
 import Info from "./Info";
 import Room from "./Room";
-import { Grid, Button, ButtonGroup, Typography } from "@material-ui/core";
 import {
   BrowserRouter as Router,
   Switch,
@@ -33,26 +32,29 @@ export default class HomePage extends Component {
 
   renderHomePage() {
     return (
-      <Grid container spacing={3}>
-        <Grid item xs={12} align="center">
-          <Typography variant="h3" compact="h3">
-            Spotify Party
-          </Typography>
-        </Grid>
-        <Grid item xs={12} align="center">
-          <ButtonGroup disableElevation variant="contained" color="primary">
-            <Button color="primary" to="/join" component={Link}>
-              Join a Room
-            </Button>
-            <Button color="default" to="/info" component={Link}>
-              Info
-            </Button>
-            <Button color="secondary" to="/create" component={Link}>
-              Create a Room
-            </Button>
-          </ButtonGroup>
-        </Grid>
-      </Grid>
+      <div class="homepage">
+        <h3 class="homepage-title">House Party</h3>
+        <h5 class="homepage-subtitle">Group Music Player</h5>
+        <div class="btn-group">
+          <Link to="/join">
+            <button class="red">
+              Join
+            </button>
+          </Link>
+          <Link to="/create">
+            <button class="blue">
+              Create
+            </button>
+          </Link>
+        </div>
+        <div class="btn-group">
+            <Link to="/info">
+              <button class="teal">
+                Info
+              </button>
+            </Link>
+        </div>
+      </div>
     );
   }
 
