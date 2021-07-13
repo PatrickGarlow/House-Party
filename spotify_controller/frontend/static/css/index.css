@@ -50,13 +50,12 @@ button {
 button:hover {
     cursor: pointer;
 }
-.homepage-title {
+.page-title {
     font-weight: 700;
-    
     text-align: center;
     margin:0;
 }
-.homepage-subtitle {
+.page-subtitle {
     font-weight: 300;
     text-align: center;
     margin: 10px;
@@ -94,10 +93,10 @@ button:hover {
 */
 /*-----------------------------------------------------------------------------*/
 @media only screen and (max-width: 600px) {
-    .homepage-title {
+    .page-title {
         font-size: 30px;
     }
-    .homepage-subtitle {
+    .page-subtitle {
         font-size: 20px;
     }
     .btn-group {
@@ -109,10 +108,10 @@ button:hover {
 }
 
 @media only screen and (min-width: 600px) {
-    .homepage-title {
+    .page-title {
         font-size: 55px;
     }
-    .homepage-subtitle {
+    .page-subtitle {
         font-size: 30px;
     }
     .btn-group {
@@ -121,10 +120,10 @@ button:hover {
 }
 
 @media only screen and (min-width: 768px) {
-    .homepage-title {
+    .page-title {
         font-size: 65px;
     }
-    .homepage-subtitle {
+    .page-subtitle {
         font-size: 30px;
     }
     .btn-group {
@@ -133,10 +132,10 @@ button:hover {
 }
 
 @media only screen and (min-width: 992px) {
-    .homepage-title {
+    .page-title {
         font-size: 70px;
     }
-    .homepage-subtitle {
+    .page-subtitle {
         font-size: 30px;
     }
     .btn-group {
@@ -145,10 +144,10 @@ button:hover {
 }
 
 @media only screen and (min-width: 1200px) {
-    .homepage-title {
+    .page-title {
         font-size: 100px;
     }
-    .homepage-subtitle {
+    .page-subtitle {
         font-size: 40px;
     }
     .btn-group {

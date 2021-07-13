@@ -33,8 +33,8 @@ export default class HomePage extends Component {
   renderHomePage() {
     return (
       <div class="homepage">
-        <h3 class="homepage-title">House Party</h3>
-        <h5 class="homepage-subtitle">Group Music Player</h5>
+        <h3 class="page-title">House Party</h3>
+        <h5 class="page-subtitle">Group Music Player</h5>
         <div class="btn-group">
           <Link to="/join">
             <button class="red">

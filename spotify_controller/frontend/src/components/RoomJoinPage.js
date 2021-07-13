@@ -15,13 +15,10 @@ export default class RoomJoinPage extends Component {
 
   render() {
     return (
-      <Grid container spacing={1}>
-        <Grid item xs={12} align="center">
-          <Typography variant="h4" component="h4">
-            Join a Room
-          </Typography>
-        </Grid>
-        <Grid item xs={12} align="center">
+      <div>
+        <h2 class="page-title">Join</h2>
+        <h4 class="page-subtitle">Enter Room Code or Scan QR Code</h4>
+        <div class="btn-group">
           <TextField
             error={this.state.error}
             label="Code"
@@ -31,22 +28,20 @@ export default class RoomJoinPage extends Component {
             variant="outlined"
             onChange={this.handleTextFieldChange}
           />
-        </Grid>
-        <Grid item xs={12} align="center">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.roomButtonPressed}
-          >
+        </div>
+        <div class="btn-group">
+          <button class="red" onClick={this.roomButtonPressed}>
             Enter Room
-          </Button>
-        </Grid>
-        <Grid item xs={12} align="center">
-          <Button variant="contained" color="secondary" to="/" component={Link}>
-            Back
-          </Button>
-        </Grid>
-      </Grid>
+          </button>
+        </div>
+        <div class="btn-group">
+          <Link to="/">
+            <button class="teal">
+              Back
+            </button>
+          </Link>
+        </div>
+      </div>
     );
   }
 
