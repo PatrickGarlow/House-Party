@@ -20,7 +20,6 @@ export default class Room extends Component {
     this.roomCode = this.props.match.params.roomCode;
     this.leaveButtonPressed = this.leaveButtonPressed.bind(this);
     this.updateShowSettings = this.updateShowSettings.bind(this);
-    this.renderSettingsButton = this.renderSettingsButton.bind(this);
     this.renderSettings = this.renderSettings.bind(this);
     this.getRoomDetails = this.getRoomDetails.bind(this);
     this.authenticateSpotify = this.authenticateSpotify.bind(this);
@@ -99,8 +98,6 @@ export default class Room extends Component {
     });
   }
 
-  hideQRButtonPressed
-
   updateShowSettings(value) {
     this.setState({
       showSettings: value,
@@ -109,8 +106,8 @@ export default class Room extends Component {
 
   renderSettings() {
     return (
-      <Grid container spacing={1}>
-        <Grid item xs={12} align="center">
+      <div>
+        <div>
           <CreateRoomPage
             update={true}
             votesToSkip={this.state.votesToSkip}
@@ -118,31 +115,13 @@ export default class Room extends Component {
             roomCode={this.roomCode}
             updateCallback={this.getRoomDetails}
           />
-        </Grid>
-        <Grid item xs={12} align="center">
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => this.updateShowSettings(false)}
-          >
+        </div>
+        <div class="btn-group">
+          <button class="red" onClick={() => this.updateShowSettings(false)}>
             Close
-          </Button>
-        </Grid>
-      </Grid>
-    );
-  }
-
-  renderSettingsButton() {
-    return (
-      <Grid item xs={12} align="center">
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => this.updateShowSettings(true)}
-        >
-          Settings
-        </Button>
-      </Grid>
+          </button>
+        </div>
+      </div>
     );
   }
 
@@ -152,48 +131,71 @@ export default class Room extends Component {
     });
   }
 
-  renderQRCode() {
-    return (
-      <div class="qr-code-item">
-        <img src={this.state.qrCodeLink} class="qr-code"></img>
-        <button onClick={() => this.updateShowQRCode(false)}>Hide QR Code</button>
+  renderButtons () {
+    if(!this.state.showQRCode && !this.state.showSettings) {
+
+      //show both together
+      return (
+      <div>
+        <div class="btn-group">
+          <button class="red" onClick={() => this.updateShowSettings(true)}>
+            Settings
+          </button>
+          <button class="blue" onClick={() => this.updateShowQRCode(true)}>
+            Show QR Code
+          </button>
+        </div>
+        <div class="btn-group">
+          <button class="teal" onClick={this.leaveButtonPressed}>
+            Leave Room
+          </button>
+        </div>
       </div>
-    );
+      );
+    }
+    else if(!this.state.showSettings && this.state.showQRCode) {
+      //only show qr
+      return (
+        <div>
+          <div class="btn-group">
+            <button class="red" onClick={() => this.updateShowSettings(true)}>
+              Settings
+            </button>
+          </div>
+          <div class="qr-code-item">
+            <img src={this.state.qrCodeLink} class="qr-code"></img>
+            <div class="btn-group">
+              <button class="blue" onClick={() => this.updateShowQRCode(false)}>Hide QR Code</button>
+            </div>
+          </div>
+          <div class="btn-group">
+            <button class="teal" onClick={this.leaveButtonPressed}>
+              Leave Room
+            </button>
+          </div>
+        </div>
+        );
+    }
+    else {
+      //this shouldn't be possible :/
+    }
+
   }
 
-  renderQROpenButton() {
-    return (
-      <button onClick={() => this.updateShowQRCode(true)}>
-        Show QR Code
-      </button>
-    );
-  }
+
 
   render() {
     if (this.state.showSettings) {
       return this.renderSettings();
     }
     return (
-      <Grid container spacing={1}>
-        <Grid item xs={12} align="center">
-          <Typography variant="h4" component="h4">
-            Code: {this.roomCode}
-          </Typography>
-        </Grid>
+      <div>
+        <h4 class="page-subtitle">
+          Code: {this.roomCode}
+        </h4>
         <MusicPlayer {...this.state.song} />
-        {this.state.isHost ? this.renderSettingsButton() : null}
-        {this.state.showQRCode ? this.renderQRCode() : this.renderQROpenButton()}
-        <Grid item xs={12} align="center">
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={this.leaveButtonPressed}
-          >
-            Leave Room
-          </Button>
-        </Grid>
-        
-      </Grid>
+        {this.renderButtons()}
+      </div>
     );
   }
 }
