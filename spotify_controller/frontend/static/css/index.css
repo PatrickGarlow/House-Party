@@ -99,9 +99,6 @@ button:hover {
     .page-subtitle {
         font-size: 20px;
     }
-    .btn-group {
-        
-    }
     button {
         width: 100%;
     }
@@ -150,9 +147,23 @@ button:hover {
     .page-subtitle {
         font-size: 40px;
     }
+    .room-code img {
+        height: 40px;
+        margin-top: 10px;
+    }
+    .room-code {
+        display: inline-flex;
+    }
     .btn-group {
         display: flex;
     }
+}
+
+#button-nostyle {
+    background-color: Transparent;
+    border: none;
+    padding: 5px;
+    margin: 5px;
 }
 
 .teal {

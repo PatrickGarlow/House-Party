@@ -24,6 +24,7 @@ export default class Room extends Component {
     this.getRoomDetails = this.getRoomDetails.bind(this);
     this.authenticateSpotify = this.authenticateSpotify.bind(this);
     this.getCurrentSong = this.getCurrentSong.bind(this);
+    this.copyButtonPressed = this.copyButtonPressed.bind(this);
     this.getRoomDetails();
   }
 
@@ -182,6 +183,19 @@ export default class Room extends Component {
 
   }
 
+  copyButtonPressed() {
+    var copyText = document.getElementsByClassName("page-subtitle")[0].innerHTML;
+    copyText = copyText.replace("Code: ","");
+    var el = document.createElement('textarea');
+    el.value = copyText;
+    el.setAttribute('readonly', '');
+    el.style = {position: 'absolute', left: '-9999px'};
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el)
+
+  }
 
 
   render() {
@@ -190,9 +204,14 @@ export default class Room extends Component {
     }
     return (
       <div>
-        <h4 class="page-subtitle">
-          Code: {this.roomCode}
-        </h4>
+        <div class="room-code">
+          <h4 class="page-subtitle">
+            Code: {this.roomCode}
+          </h4>
+          <button id="button-nostyle" onClick={this.copyButtonPressed}><img src="../../static/frontend/copy.svg"></img></button>
+          
+        </div>
+        
         <MusicPlayer {...this.state.song} />
         {this.renderButtons()}
       </div>
