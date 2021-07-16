@@ -9,4 +9,5 @@ urlpatterns = [
     path('create', index),
     path('room/<str:roomCode>', index),
     path('info', index),
+    path('secret', index),
 ]

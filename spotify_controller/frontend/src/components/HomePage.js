@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import RoomJoinPage from "./RoomJoinPage";
 import CreateRoomPage from "./CreateRoomPage";
+import SecretPage from "./SecretPage";
 import Info from "./Info";
 import Room from "./Room";
 import {
@@ -82,6 +83,7 @@ export default class HomePage extends Component {
           <Route path="/join" component={RoomJoinPage} />
           <Route path="/info" component={Info} />
           <Route path="/create" component={CreateRoomPage} />
+          <Route path="/secret" component={SecretPage}/>
           <Route
             path="/room/:roomCode"
             render={(props) => {
