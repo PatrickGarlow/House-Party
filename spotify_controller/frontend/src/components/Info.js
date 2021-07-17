@@ -113,7 +113,7 @@ export default function Info(props) {
 
     function tabBuilder(title, buttonBefore, linkBefore, pageNumber, buttonAfter, linkAfter, middleContent) {
       return (
-        <div>
+        <div class="info-window">
           <div class="info-tab">
             <h3 class="dark-text page-subtitle">{title}</h3>
             {middleContent}
