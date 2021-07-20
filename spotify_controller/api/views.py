@@ -1,11 +1,10 @@
 from django.shortcuts import render
-from rest_framework import generics, serializers, status
+from rest_framework import generics, status
 from .serializers import RoomSerializer, CreateRoomSerializer, UpdateRoomSerializer
 from .models import Room
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import JsonResponse
-import requests
 
 # Create your views here.
 
@@ -26,7 +25,6 @@ class GetRoom(APIView):
             if len(room) > 0:
                 data = RoomSerializer(room[0]).data
                 data['is_host'] = self.request.session.session_key == room[0].host
-                print(data)
                 return Response(data, status=status.HTTP_200_OK)
             return Response({'Room Not Found': 'Invalid Room Code.'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -56,11 +54,6 @@ class JoinRoom(APIView):
 class CreateRoomView(APIView):
     serializer_class = CreateRoomSerializer
 
-    def make_tiny(self,roomCode):
-        request_url = 'https://tinyurl.com/api-create.php?url=http://127.0.0.1:8000/room/'+roomCode
-        response = requests.get(request_url)
-        return 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+response.text
-
     def post(self, request, format=None):
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
@@ -75,17 +68,14 @@ class CreateRoomView(APIView):
                 room = queryset[0]
                 room.guest_can_pause = guest_can_pause
                 room.votes_to_skip = votes_to_skip
-                room.qr_code_link = self.make_tiny(room.code)
                 room.save(update_fields=['guest_can_pause', 'votes_to_skip'])
                 self.request.session['room_code'] = room.code
                 return Response(RoomSerializer(room).data, status=status.HTTP_200_OK)
             else:
                 room = Room(host=host, guest_can_pause=guest_can_pause,
                             votes_to_skip=votes_to_skip)
-                room.qr_code_link = self.make_tiny(room.code)
                 room.save()
-                print("hit")
-                self.request.session['qr_code_link'] = self.make_tiny(room.code)
+                self.request.session['room_code'] = room.code
                 return Response(RoomSerializer(room).data, status=status.HTTP_201_CREATED)
 
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
